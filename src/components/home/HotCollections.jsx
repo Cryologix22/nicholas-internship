@@ -1,9 +1,146 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import AuthorImage from "../../images/author_thumbnail.jpg";
-import nftImage from "../../images/nftImage.jpg";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import "../../css/styles/hotCollections.css";
+import axios from "axios";
+
+const HoldArrow = ({ direction, onStart, onStop, onClick, wasHeld }) => (
+  <button
+    type="button"
+    className={`hold-arrow hold-arrow-${direction}`}
+    onPointerDown={(e) => {
+      if (e.button === 0) onStart(direction);
+    }}
+    onPointerUp={onStop}
+    onPointerCancel={onStop}
+    onPointerLeave={onStop}
+    onClick={(e) => {
+      e.preventDefault();
+      if (!wasHeld()) onClick?.();
+    }}
+  >
+    {direction === "next" ? "›" : "‹"}
+  </button>
+);
+
+const CollectionSkeleton = () => {
+  return (
+    <div className="collection-skeleton">
+      <div className="skeleton-image skeleton-shimmer"></div>
+
+      <div className="skeleton-author">
+        <div className="skeleton-avatar skeleton-shimmer"></div>
+        <span className="skeleton-verified">✓</span>
+      </div>
+
+      <div className="skeleton-title skeleton-shimmer"></div>
+      <div className="skeleton-code skeleton-shimmer"></div>
+    </div>
+  );
+};
 
 const HotCollections = () => {
+  const [collections, setCollections] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchCollections = async () => {
+      try {
+        const res = await axios.get(
+          "https://us-central1-nft-cloud-functions.cloudfunctions.net/hotCollections",
+        );
+
+        setCollections(res.data);
+      } catch (error) {
+        console.error("Error fetching collections:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCollections();
+  }, []);
+
+  const sliderRef = useRef(null);
+  const holdTimer = useRef(null);
+  const holdTriggered = useRef(false);
+
+  const startHold = (direction) => {
+    stopHold();
+    holdTriggered.current = false;
+
+    holdTimer.current = setTimeout(() => {
+      holdTriggered.current = true;
+
+      holdTimer.current = setInterval(() => {
+        if (direction === "next") {
+          sliderRef.current?.slickNext();
+        } else {
+          sliderRef.current?.slickPrev();
+        }
+      }, 200);
+    }, 200);
+  };
+
+  const stopHold = () => {
+    clearTimeout(holdTimer.current);
+    clearInterval(holdTimer.current);
+    holdTimer.current = null;
+  };
+
+  useEffect(() => {
+    return () => stopHold();
+  }, []);
+
+  const settings = {
+    dots: true,
+    infinite: true,
+    arrows: true,
+    autoplay: true,
+    autoplaySpeed: 3000,
+    speed: 500,
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    waitForAnimate: true,
+    pauseOnHover: true,
+    pauseOnFocus: true,
+    swipeToSlide: true,
+    draggable: true,
+    nextArrow: (
+      <HoldArrow
+        direction="next"
+        onStart={startHold}
+        onStop={stopHold}
+        wasHeld={() => holdTriggered.current}
+      />
+    ),
+
+    prevArrow: (
+      <HoldArrow
+        direction="prev"
+        onStart={startHold}
+        onStop={stopHold}
+        wasHeld={() => holdTriggered.current}
+      />
+    ),
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: { slidesToShow: 3 },
+      },
+      {
+        breakpoint: 768,
+        settings: { slidesToShow: 2 },
+      },
+      {
+        breakpoint: 480,
+        settings: { slidesToShow: 1 },
+      },
+    ],
+  };
+
   return (
     <section id="section-collections" className="no-bottom">
       <div className="container">
@@ -14,29 +151,49 @@ const HotCollections = () => {
               <div className="small-border bg-color-2"></div>
             </div>
           </div>
-          {new Array(4).fill(0).map((_, index) => (
-            <div className="col-lg-3 col-md-6 col-sm-6 col-xs-12" key={index}>
-              <div className="nft_coll">
-                <div className="nft_wrap">
-                  <Link to="/item-details">
-                    <img src={nftImage} className="lazy img-fluid" alt="" />
-                  </Link>
-                </div>
-                <div className="nft_coll_pp">
-                  <Link to="/author">
-                    <img className="lazy pp-coll" src={AuthorImage} alt="" />
-                  </Link>
-                  <i className="fa fa-check"></i>
-                </div>
-                <div className="nft_coll_info">
-                  <Link to="/explore">
-                    <h4>Pinky Ocean</h4>
-                  </Link>
-                  <span>ERC-192</span>
-                </div>
-              </div>
-            </div>
-          ))}
+          <Slider
+            ref={sliderRef}
+            {...settings}
+            className="hot-collections-slider"
+          >
+            {loading
+              ? Array.from({ length: 6 }).map((_, index) => (
+                  <CollectionSkeleton key={index} />
+                ))
+              : collections.map((collection) => (
+                  <div key={collection.id}>
+                    <div className="nft_coll">
+                      <div className="nft_wrap">
+                        <Link to="/item-details">
+                          <img
+                            src={collection.nftImage}
+                            className="lazy img-fluid"
+                            alt={collection.title}
+                          />
+                        </Link>
+                      </div>
+
+                      <div className="nft_coll_pp">
+                        <Link to="/author">
+                          <img
+                            className="lazy pp-coll"
+                            src={collection.authorImage}
+                            alt={collection.authorName || "Collection author"}
+                          />
+                        </Link>
+                        <i className="fa fa-check"></i>
+                      </div>
+
+                      <div className="nft_coll_info">
+                        <Link to="/explore">
+                          <h4>{collection.title}</h4>
+                        </Link>
+                        <span>ERC-{collection.code}</span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+          </Slider>
         </div>
       </div>
     </section>
