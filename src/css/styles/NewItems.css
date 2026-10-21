@@ -1,0 +1,132 @@
+/* New Items - React Slick */
+
+.new-items-slider {
+  margin: 0 35px;
+}
+
+.new-items-slider .hold-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 34px;
+  height: 34px;
+  border: none;
+  border-radius: 50%;
+  background: #8054e8;
+  color: white;
+  font-size: 26px;
+  line-height: 30px;
+  cursor: pointer;
+  touch-action: none;
+}
+
+.new-items-slider .hold-arrow-prev {
+  left: -42px;
+}
+
+.new-items-slider .hold-arrow-next {
+  right: -42px;
+}
+
+/* NEW ITEMS SKELETON */
+
+#section-items .collection-skeleton {
+  position: relative;
+  height: 325px;
+  margin: 0 5px;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+}
+
+#section-items .collection-skeleton .skeleton-image {
+  height: 200px;
+  width: 100%;
+}
+
+#section-items .collection-skeleton .skeleton-author {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  margin: -25px auto 18px;
+}
+
+#section-items .collection-skeleton .skeleton-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+#section-items .collection-skeleton .skeleton-verified {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #8054e8;
+  color: white;
+  font-size: 11px;
+  font-weight: bold;
+  text-align: center;
+  line-height: 16px;
+}
+
+#section-items .collection-skeleton .skeleton-title {
+  width: 100px;
+  height: 20px;
+  margin: 0 auto 8px;
+}
+
+#section-items .collection-skeleton .skeleton-code {
+  width: 60px;
+  height: 20px;
+  margin: 0 auto;
+}
+
+/* LEFT-TO-RIGHT SHIMMER */
+
+#section-items .collection-skeleton .skeleton-shimmer {
+  background: linear-gradient(
+    90deg,
+    #e2e0e2 0%,
+    #f5f4f5 50%,
+    #e2e0e2 100%
+  );
+  background-size: 200% 100%;
+  animation: newItemsShimmer 1.5s linear infinite;
+}
+
+@keyframes newItemsShimmer {
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #section-items .collection-skeleton .skeleton-shimmer {
+    animation: none;
+  }
+}
+
+/* MOBILE CAROUSEL ARROW FIX */
+
+@media (max-width: 650px) {
+  .new-items-slider {
+    margin: 0 20px;
+  }
+
+  .new-items-slider .hold-arrow-prev {
+    left: 8px;
+  }
+
+  .new-items-slider .hold-arrow-next {
+    right: 8px;
+  }
+}
