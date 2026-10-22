@@ -1,0 +1,86 @@
+/* TOP SELLERS SKELETON */
+
+.seller-skeleton {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 70px;
+}
+
+.seller-skeleton-wrap {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  flex-shrink: 0;
+}
+
+.seller-skeleton-avatar {
+  width: 50px;
+  height: 50px;
+  flex-shrink: 0;
+  border-radius: 50%;
+}
+
+.seller-skeleton-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.seller-skeleton-name {
+  width: 110px;
+  max-width: 90%;
+  height: 16px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+}
+
+.seller-skeleton-sales {
+  width: 65px;
+  height: 12px;
+  border-radius: 4px;
+}
+
+.seller-skeleton-verified {
+  position: absolute;
+  right: -2px;
+  bottom: -2px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #8054e8;
+  color: white;
+  font-size: 11px;
+  font-weight: bold;
+  text-align: center;
+  line-height: 16px;
+  z-index: 1;
+}
+
+/* SHIMMER */
+
+.seller-skeleton .skeleton-shimmer {
+  background: linear-gradient(
+    90deg,
+    #e2e0e2 0%,
+    #f5f4f5 50%,
+    #e2e0e2 100%
+  );
+  background-size: 200% 100%;
+  animation: sellerShimmer 1.5s linear infinite;
+}
+
+@keyframes sellerShimmer {
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .seller-skeleton .skeleton-shimmer {
+    animation: none;
+  }
+}
