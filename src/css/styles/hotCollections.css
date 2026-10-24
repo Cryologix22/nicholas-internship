@@ -31,7 +31,7 @@
 
 /* HOT COLLECTIONS SKELETON */
 
-.collection-skeleton {
+.collection-skeleton--hot {
   position: relative;
   height: 325px;
   margin: 0 5px;
@@ -41,25 +41,25 @@
   background: #fff;
 }
 
-.collection-skeleton .skeleton-image {
+.collection-skeleton--hot  .skeleton-image {
   height: 200px;
   width: 100%;
 }
 
-.collection-skeleton .skeleton-author {
+.collection-skeleton--hot  .skeleton-author {
   position: relative;
   width: 50px;
   height: 50px;
   margin: -25px auto 18px;
 }
 
-.collection-skeleton .skeleton-avatar {
+.collection-skeleton--hot  .skeleton-avatar {
   width: 50px;
   height: 50px;
   border-radius: 50%;
 }
 
-.collection-skeleton .skeleton-verified {
+.collection-skeleton--hot .skeleton-verified {
   position: absolute;
   right: 0;
   bottom: 0;
@@ -74,13 +74,13 @@
   line-height: 16px;
 }
 
-.collection-skeleton .skeleton-title {
+.collection-skeleton--hot .skeleton-title {
   width: 100px;
   height: 20px;
   margin: 0 auto 8px;
 }
 
-.collection-skeleton .skeleton-code {
+.collection-skeleton--hot .skeleton-code {
   width: 60px;
   height: 20px;
   margin: 0 auto;
@@ -88,7 +88,7 @@
 
 /* LEFT-TO-RIGHT SHIMMER */
 
-.collection-skeleton .skeleton-shimmer {
+.collection-skeleton--hot  .skeleton-shimmer {
   background: linear-gradient(
     90deg,
     #e2e0e2 0%,
@@ -110,7 +110,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .collection-skeleton .skeleton-shimmer {
+  .collection-skeleton--hot  .skeleton-shimmer {
     animation: none;
   }
 }

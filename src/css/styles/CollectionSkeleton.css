@@ -1,0 +1,66 @@
+
+.collection-skeleton {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.skeleton-shimmer {
+  position: relative;
+  overflow: hidden;
+  background-color: #e5e5e5;
+  border-radius: 6px;
+}
+
+.skeleton-shimmer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.55),
+    transparent
+  );
+  animation: skeleton-shimmer 1.5s infinite;
+}
+
+@keyframes skeleton-shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.skeleton-image {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+}
+
+.skeleton-title {
+  width: 70%;
+  height: 18px;
+  margin-top: 16px;
+}
+
+.skeleton-code {
+  width: 40%;
+  height: 14px;
+  margin-top: 10px;
+}
+
+.skeleton-author {
+  position: relative;
+}
+
+.skeleton-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.skeleton-verified {
+  position: absolute;
+  bottom: 0;
+  left: 28px;
+}
