@@ -1,0 +1,39 @@
+.nft__item .de_countdown {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  width: max-content;
+  min-width: 100px;
+  padding: 5px 12px;
+  border-radius: 20px;
+}
+
+/* Explore Items skeleton layout */
+
+.collection-skeleton--explore {
+  margin-bottom: 30px;
+  width: 100%;
+}
+
+.collection-skeleton--explore .skeleton-image {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 8px;
+}
+
+.collection-skeleton--explore .skeleton-author {
+  margin-top: 12px;
+}
+
+.collection-skeleton--explore .skeleton-title {
+  width: 75%;
+  height: 18px;
+  margin-top: 16px;
+}
+
+.collection-skeleton--explore .skeleton-code {
+  width: 40%;
+  height: 14px;
+  margin-top: 10px;
+}

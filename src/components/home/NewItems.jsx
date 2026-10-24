@@ -6,6 +6,7 @@ import "slick-carousel/slick/slick-theme.css";
 import "../../css/styles/NewItems.css";
 import axios from "axios";
 import Countdown from "../Countdown";
+import CollectionSkeleton from "../CollectionSkeleton";
 
 const HoldArrow = ({ direction, onStart, onStop, onClick, wasHeld }) => (
   <button
@@ -25,20 +26,6 @@ const HoldArrow = ({ direction, onStart, onStop, onClick, wasHeld }) => (
     {direction === "next" ? "›" : "‹"}
   </button>
 );
-
-const CollectionSkeleton = () => {
-  return (
-    <div className="collection-skeleton">
-      <div className="skeleton-image skeleton-shimmer"></div>
-      <div className="skeleton-author">
-        <div className="skeleton-avatar skeleton-shimmer"></div>
-        <span className="skeleton-verified">✓</span>
-      </div>
-      <div className="skeleton-title skeleton-shimmer"></div>
-      <div className="skeleton-code skeleton-shimmer"></div>
-    </div>
-  );
-};
 
 const NewItems = () => {
   const [newItemsCollection, setNewItemsCollection] = useState([]);
@@ -157,7 +144,7 @@ const NewItems = () => {
           >
             {loading
               ? Array.from({ length: 7 }).map((_, index) => (
-                  <CollectionSkeleton key={index} />
+                  <CollectionSkeleton key={index} variant="new" />
                 ))
               : newItemsCollection.map((collection) => (
                   <div key={collection.id}>
