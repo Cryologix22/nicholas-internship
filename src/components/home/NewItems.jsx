@@ -30,6 +30,7 @@ const HoldArrow = ({ direction, onStart, onStop, onClick, wasHeld }) => (
 const NewItems = () => {
   const [newItemsCollection, setNewItemsCollection] = useState([]);
   const [loading, setLoading] = useState(true);
+  
 
   useEffect(() => {
     const fetchNewItemsCollection = async () => {
@@ -47,6 +48,28 @@ const NewItems = () => {
     };
 
     fetchNewItemsCollection();
+  }, []);
+  
+    const getSlidesToShow = () => {
+    const width = window.innerWidth;
+  
+    if (width <= 480) return 1;
+    if (width <= 768) return 2;
+    if (width <= 1024) return 3;
+  
+    return 4;
+  };
+  
+  const [slidesToShow, setSlidesToShow] = useState(getSlidesToShow);
+  
+  useEffect(() => {
+    const handleResize = () => {
+      setSlidesToShow(getSlidesToShow());
+    };
+  
+    window.addEventListener("resize", handleResize);
+  
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   const sliderRef = useRef(null);
@@ -81,13 +104,13 @@ const NewItems = () => {
   }, []);
 
   const settings = {
+    respondTo: "window",
     dots: true,
     infinite: true,
     arrows: true,
     autoplay: true,
     autoplaySpeed: 3000,
     speed: 500,
-    slidesToShow: 4,
     slidesToScroll: 1,
     waitForAnimate: true,
     pauseOnHover: true,
@@ -111,20 +134,7 @@ const NewItems = () => {
         wasHeld={() => holdTriggered.current}
       />
     ),
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: { slidesToShow: 3 },
-      },
-      {
-        breakpoint: 768,
-        settings: { slidesToShow: 2 },
-      },
-      {
-        breakpoint: 480,
-        settings: { slidesToShow: 1 },
-      },
-    ],
+    slidesToShow,
   };
 
   return (
@@ -172,15 +182,15 @@ const NewItems = () => {
                               <button>Buy Now</button>
                               <div className="nft__item_share">
                                 <h4>Share</h4>
-                                <a href="" target="_blank" rel="noreferrer">
+                                <button type="button" aria-label="Share on Facebook" disabled>
                                   <i className="fa fa-facebook fa-lg"></i>
-                                </a>
-                                <a href="" target="_blank" rel="noreferrer">
+                                </button>
+                                <button type="button" aria-label="Share on Twitter" disabled>
                                   <i className="fa fa-twitter fa-lg"></i>
-                                </a>
-                                <a href="">
+                                </button>
+                                <button type="button" aria-label="Share with Email" disabled>
                                   <i className="fa fa-envelope fa-lg"></i>
-                                </a>
+                                </button>
                               </div>
                             </div>
                           </div>
