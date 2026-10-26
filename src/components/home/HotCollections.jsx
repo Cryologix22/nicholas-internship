@@ -49,6 +49,28 @@ const HotCollections = () => {
     fetchCollections();
   }, []);
 
+  const getSlidesToShow = () => {
+    const width = window.innerWidth;
+
+    if (width <= 480) return 1;
+    if (width <= 768) return 2;
+    if (width <= 1024) return 3;
+
+    return 4;
+  };
+
+  const [slidesToShow, setSlidesToShow] = useState(getSlidesToShow);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setSlidesToShow(getSlidesToShow());
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const sliderRef = useRef(null);
   const holdTimer = useRef(null);
   const holdTriggered = useRef(false);
@@ -81,13 +103,13 @@ const HotCollections = () => {
   }, []);
 
   const settings = {
+    respondTo: "window",
     dots: true,
     infinite: true,
     arrows: true,
     autoplay: true,
     autoplaySpeed: 3000,
     speed: 500,
-    slidesToShow: 4,
     slidesToScroll: 1,
     waitForAnimate: true,
     pauseOnHover: true,
@@ -111,20 +133,7 @@ const HotCollections = () => {
         wasHeld={() => holdTriggered.current}
       />
     ),
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: { slidesToShow: 3 },
-      },
-      {
-        breakpoint: 768,
-        settings: { slidesToShow: 2 },
-      },
-      {
-        breakpoint: 480,
-        settings: { slidesToShow: 1 },
-      },
-    ],
+    slidesToShow,
   };
 
   return (
@@ -139,54 +148,50 @@ const HotCollections = () => {
               <div className="small-border bg-color-2"></div>
             </div>
           </div>
-          <div 
-            data-aos="fade"
-            data-aos-delay="100"
-            data-aos-duration="900"
-          >
-           <Slider
-            ref={sliderRef}
-            {...settings}
-            className="hot-collections-slider"
+          <div data-aos="fade" data-aos-delay="100" data-aos-duration="900">
+            <Slider
+              ref={sliderRef}
+              {...settings}
+              className="hot-collections-slider"
             >
-            {loading
-              ? Array.from({ length: 6 }).map((_, index) => (
-                  <CollectionSkeleton key={index} variant="hot" />
-                ))
-              : collections.map((collection) => (
-                  <div key={collection.id}>
-                    <div className="nft_coll">
-                      <div className="nft_wrap">
-                        <Link to={`/item-details/${collection.nftId}`}>
-                          <img
-                            src={collection.nftImage}
-                            className="lazy img-fluid"
-                            alt={collection.title}
-                          />
-                        </Link>
-                      </div>
+              {loading
+                ? Array.from({ length: 6 }).map((_, index) => (
+                    <CollectionSkeleton key={index} variant="hot" />
+                  ))
+                : collections.map((collection) => (
+                    <div key={collection.id}>
+                      <div className="nft_coll">
+                        <div className="nft_wrap">
+                          <Link to={`/item-details/${collection.nftId}`}>
+                            <img
+                              src={collection.nftImage}
+                              className="lazy img-fluid"
+                              alt={collection.title}
+                            />
+                          </Link>
+                        </div>
 
-                      <div className="nft_coll_pp">
-                        <Link to={`/author/${collection.authorId}`}>
-                          <img
-                            className="lazy pp-coll"
-                            src={collection.authorImage}
-                            alt={collection.authorName || "Collection author"}
-                          />
-                        </Link>
-                        <i className="fa fa-check"></i>
-                      </div>
+                        <div className="nft_coll_pp">
+                          <Link to={`/author/${collection.authorId}`}>
+                            <img
+                              className="lazy pp-coll"
+                              src={collection.authorImage}
+                              alt={collection.authorName || "Collection author"}
+                            />
+                          </Link>
+                          <i className="fa fa-check"></i>
+                        </div>
 
-                      <div className="nft_coll_info">
-                        <Link to="/explore">
-                          <h4>{collection.title}</h4>
-                        </Link>
-                        <span>ERC-{collection.code}</span>
+                        <div className="nft_coll_info">
+                          <Link to="/explore">
+                            <h4>{collection.title}</h4>
+                          </Link>
+                          <span>ERC-{collection.code}</span>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
-          </Slider>
+                  ))}
+            </Slider>
           </div>
         </div>
       </div>
