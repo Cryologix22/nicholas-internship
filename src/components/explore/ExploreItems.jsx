@@ -124,7 +124,12 @@ const ExploreItems = () => {
             ))}
       </div>
       {!loading && visibleCount < expItem.length && (
-        <div className="text-center">
+        <div
+          className="text-center"
+          data-aos="fade"
+          data-aos-delay="0"
+          data-aos-duration="300"
+        >
           <button
             type="button"
             id="loadmore"
