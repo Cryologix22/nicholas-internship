@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import '../../components/CollectionSkeleton';
+import "../../components/CollectionSkeleton";
 import "../../css/styles/hotCollections.css";
 import axios from "axios";
 import CollectionSkeleton from "../../components/CollectionSkeleton";
@@ -133,15 +133,22 @@ const HotCollections = () => {
         <div className="row">
           <div className="col-lg-12">
             <div className="text-center">
-              <h2>Hot Collections</h2>
+              <h2 data-aos="fade" data-aos-duration="900">
+                Hot Collections
+              </h2>
               <div className="small-border bg-color-2"></div>
             </div>
           </div>
-          <Slider
+          <div 
+            data-aos="fade"
+            data-aos-delay="100"
+            data-aos-duration="900"
+          >
+           <Slider
             ref={sliderRef}
             {...settings}
             className="hot-collections-slider"
-          >
+            >
             {loading
               ? Array.from({ length: 6 }).map((_, index) => (
                   <CollectionSkeleton key={index} variant="hot" />
@@ -180,6 +187,7 @@ const HotCollections = () => {
                   </div>
                 ))}
           </Slider>
+          </div>
         </div>
       </div>
     </section>
