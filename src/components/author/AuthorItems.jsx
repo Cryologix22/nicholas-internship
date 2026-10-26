@@ -1,13 +1,8 @@
-
 import React from "react";
 import { Link } from "react-router-dom";
 import CollectionSkeleton from "../CollectionSkeleton";
 
-const AuthorItems = ({
-  items = [],
-  authorImage,
-  loading = false,
-}) => {
+const AuthorItems = ({ items = [], authorImage, loading = false }) => {
   return (
     <div className="de_tab_content">
       <div className="tab-1">
@@ -47,24 +42,29 @@ const AuthorItems = ({
 
                           <div className="nft__item_share">
                             <h4>Share</h4>
-                            <a
-                              href="#"
-                              onClick={(e) => e.preventDefault()}
+                            <button
+                              type="button"
+                              aria-label="Share on Facebook"
+                              disabled
                             >
                               <i className="fa fa-facebook fa-lg"></i>
-                            </a>
-                            <a
-                              href="#"
-                              onClick={(e) => e.preventDefault()}
+                            </button>
+
+                            <button
+                              type="button"
+                              aria-label="Share on Twitter"
+                              disabled
                             >
                               <i className="fa fa-twitter fa-lg"></i>
-                            </a>
-                            <a
-                              href="#"
-                              onClick={(e) => e.preventDefault()}
+                            </button>
+
+                            <button
+                              type="button"
+                              aria-label="Share with Email"
+                              disabled
                             >
                               <i className="fa fa-envelope fa-lg"></i>
-                            </a>
+                            </button>
                           </div>
                         </div>
                       </div>
@@ -83,9 +83,7 @@ const AuthorItems = ({
                         <h4>{item.title}</h4>
                       </Link>
 
-                      <div className="nft__item_price">
-                        {item.price} ETH
-                      </div>
+                      <div className="nft__item_price">{item.price} ETH</div>
 
                       <div className="nft__item_like">
                         <i className="fa fa-heart"></i>

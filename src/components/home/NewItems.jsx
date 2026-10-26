@@ -30,7 +30,6 @@ const HoldArrow = ({ direction, onStart, onStop, onClick, wasHeld }) => (
 const NewItems = () => {
   const [newItemsCollection, setNewItemsCollection] = useState([]);
   const [loading, setLoading] = useState(true);
-  
 
   useEffect(() => {
     const fetchNewItemsCollection = async () => {
@@ -49,26 +48,26 @@ const NewItems = () => {
 
     fetchNewItemsCollection();
   }, []);
-  
-    const getSlidesToShow = () => {
+
+  const getSlidesToShow = () => {
     const width = window.innerWidth;
-  
+
     if (width <= 480) return 1;
     if (width <= 768) return 2;
     if (width <= 1024) return 3;
-  
+
     return 4;
   };
-  
+
   const [slidesToShow, setSlidesToShow] = useState(getSlidesToShow);
-  
+
   useEffect(() => {
     const handleResize = () => {
       setSlidesToShow(getSlidesToShow());
     };
-  
+
     window.addEventListener("resize", handleResize);
-  
+
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
@@ -182,13 +181,25 @@ const NewItems = () => {
                               <button>Buy Now</button>
                               <div className="nft__item_share">
                                 <h4>Share</h4>
-                                <button type="button" aria-label="Share on Facebook" disabled>
+                                <button
+                                  type="button"
+                                  aria-label="Share on Facebook"
+                                  disabled
+                                >
                                   <i className="fa fa-facebook fa-lg"></i>
                                 </button>
-                                <button type="button" aria-label="Share on Twitter" disabled>
+                                <button
+                                  type="button"
+                                  aria-label="Share on Twitter"
+                                  disabled
+                                >
                                   <i className="fa fa-twitter fa-lg"></i>
                                 </button>
-                                <button type="button" aria-label="Share with Email" disabled>
+                                <button
+                                  type="button"
+                                  aria-label="Share with Email"
+                                  disabled
+                                >
                                   <i className="fa fa-envelope fa-lg"></i>
                                 </button>
                               </div>
